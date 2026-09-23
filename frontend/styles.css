@@ -1,0 +1,369 @@
+:root {
+  --color-primario: #1e293b;
+  --color-acento: #2563eb;
+  --color-fondo: #f8fafc;
+  --color-entregado: #16a34a;
+  --color-transito: #2563eb;
+  --color-pendiente: #d97706;
+  --color-cancelado: #dc2626;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--color-fondo);
+}
+
+.login-body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fondo);
+}
+
+.login-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: min(360px, 90%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-card h1 {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  color: var(--color-primario);
+}
+
+.login-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--color-primario);
+}
+
+.login-card input {
+  padding: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.login-card button {
+  padding: 0.6rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-acento);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-card button:hover {
+  opacity: 0.9;
+}
+
+.error-msg {
+  color: var(--color-cancelado);
+  font-size: 0.85rem;
+  margin: 0;
+  min-height: 1.2em;
+}
+
+/* ===== Header / Topbar ===== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-primario);
+  color: white;
+  padding: 1rem 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.topbar-usuario {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+}
+
+.topbar-usuario button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.topbar-usuario button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.nav-filtros {
+  background: white;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.nav-filtros ul {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.nav-filtros button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-acento);
+  background: white;
+  color: var(--color-acento);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-filtros button.activo {
+  background: var(--color-acento);
+  color: white;
+}
+
+.layout {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: flex-start;
+}
+
+.contenido-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.kpi-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.kpi-valor {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-acento);
+}
+
+.kpi-label {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.form-registro,
+.tab-flota {
+  background: white;
+  border-radius: 8px;
+  padding: 1.2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-registro form,
+.tab-flota form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.form-registro label,
+.tab-flota label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+  color: var(--color-primario);
+}
+
+.form-registro input,
+.tab-flota input {
+  width: 100%;
+  padding: 0.4rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
+.form-registro button,
+.tab-flota button {
+  align-self: flex-start;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-acento);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.tarjeta-envio {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.pill-status {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.pill-status.ENTREGADO   { background: var(--color-entregado); }
+.pill-status.EN_TRANSITO { background: var(--color-transito); }
+.pill-status.PENDIENTE   { background: var(--color-pendiente); }
+.pill-status.CANCELADO   { background: var(--color-cancelado); }
+
+.tarjeta-envio .acciones {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tarjeta-envio button {
+  flex: 1;
+  padding: 0.4rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--color-primario);
+  color: white;
+}
+
+.aside-admin {
+  flex: 0 0 280px;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  height: fit-content;
+}
+
+.aside-hint {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.fila-auditoria {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+}
+
+/* ===== Modal de bitácora ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: min(500px, 90%);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-box header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filtro-fechas {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.fila-bitacora {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/* ===== Footer ===== */
+.app-footer {
+  text-align: center;
+  padding: 1rem;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .aside-admin {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .nav-filtros ul {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tablero {
+    grid-template-columns: 1fr;
+  }
+}
