@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExpresoFast — Tablero de Monitoreo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>ExpresoFast</h1>
+    <div class="topbar-usuario">
+      <span id="usuarioActivo"></span>
+      <span id="contadorEnvios">0 envíos</span>
+      <button id="btnLogout">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <nav class="nav-filtros">
+    <ul id="filtros">
+      <li><button data-filtro="TODOS" class="activo">TODOS</button></li>
+      <li><button data-filtro="PENDIENTE">PENDIENTE</button></li>
+      <li><button data-filtro="EN_TRANSITO">EN_TRANSITO</button></li>
+      <li><button data-filtro="ENTREGADO">ENTREGADO</button></li>
+    </ul>
+  </nav>
+
+  <div class="layout">
+    <main class="contenido-principal">
+      <section id="kpiSection" class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-valor" id="kpiTotalEnvios">0</span>
+          <span class="kpi-label">Total Envíos</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-valor" id="kpiVehiculosActivos">0</span>
+          <span class="kpi-label">Vehículos Activos</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-valor" id="kpiEntregados">0</span>
+          <span class="kpi-label">Paquetes Entregados</span>
+        </div>
+      </section>
+
+      <section class="form-registro">
+        <h2>Registrar envío</h2>
+        <form id="formEnvio">
+          <label for="codigoRastreo">Código de rastreo (formato EXP-1234)
+            <input type="text" id="codigoRastreo" required>
+          </label>
+          <label for="direccionDestino">Dirección destino
+            <input type="text" id="direccionDestino" required>
+          </label>
+          <label for="pesoKg">Peso (kg)
+            <input type="number" step="0.01" id="pesoKg" required>
+          </label>
+          <label for="costo">Costo
+            <input type="number" step="0.01" id="costo" required>
+          </label>
+          <label for="vehiculoId">ID Vehículo
+            <input type="number" id="vehiculoId" required>
+          </label>
+          <label for="conductorId">ID Conductor
+            <input type="number" id="conductorId" required>
+          </label>
+          <button type="submit">Registrar envío</button>
+          <p id="errorFormEnvio" class="error-msg" role="alert" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="tabFlota" class="tab-flota">
+        <h2>Gestión de flota</h2>
+        <form id="formVehiculo">
+          <label for="placaVehiculo">Placa
+            <input type="text" id="placaVehiculo" required>
+          </label>
+          <label for="marcaVehiculo">Marca
+            <input type="text" id="marcaVehiculo" required>
+          </label>
+          <label for="modeloVehiculo">Modelo
+            <input type="text" id="modeloVehiculo" required>
+          </label>
+          <label for="capacidadVehiculo">Capacidad (kg)
+            <input type="number" step="0.01" id="capacidadVehiculo" required>
+          </label>
+          <label for="empresaIdVehiculo">ID Empresa
+            <input type="number" id="empresaIdVehiculo" required>
+          </label>
+          <button type="submit">Registrar vehículo</button>
+          <p id="errorFormVehiculo" class="error-msg" role="alert" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="enviosGrid" class="tablero" aria-live="polite"></section>
+    </main>
+
+    <aside id="asideAuditoria" class="aside-admin">
+      <h2>Bitácora de Auditoría</h2>
+      <p class="aside-hint">Últimos cambios de estado registrados en el sistema.</p>
+      <div id="auditoriaGlobal">
+        <p>Cargando...</p>
+      </div>
+    </aside>
+  </div>
+
+  <div id="modalBitacora" class="modal-overlay">
+    <div class="modal-box">
+      <header>
+        <h2>Bitácora del envío</h2>
+        <button id="cerrarModal">&times;</button>
+      </header>
+      <div class="filtro-fechas">
+        <label for="fechaDesde">Desde <input type="date" id="fechaDesde"></label>
+        <label for="fechaHasta">Hasta <input type="date" id="fechaHasta"></label>
+      </div>
+      <div id="bitacoraContenido"></div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <p>&copy; 2026 ExpresoFast · <a href="#">Soporte</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
