@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExpresoFast — Envíos paginados</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>ExpresoFast</h1>
+    <nav>
+      <a href="index.html" class="link-nav">Tablero</a>
+      <span id="usuarioActivo"></span>
+      <button id="btnLogout">Cerrar sesión</button>
+    </nav>
+  </header>
+
+  <main class="contenedor-paginado">
+    <section aria-labelledby="tituloEnvios">
+      <h2 id="tituloEnvios">Guías de envío</h2>
+
+      <form id="formFiltros" class="barra-filtros">
+        <label>Buscar
+          <input type="search" id="busqueda" placeholder="Rastreo, destinatario o dirección">
+        </label>
+        <label>Stored Procedure por estado
+          <select id="selectSP">
+            <option value="">— Sin SP (lista paginada) —</option>
+            <option value="PENDIENTE">SP: PENDIENTE</option>
+            <option value="EN_TRANSITO">SP: EN_TRANSITO</option>
+            <option value="ENTREGADO">SP: ENTREGADO</option>
+            <option value="CANCELADO">SP: CANCELADO</option>
+          </select>
+        </label>
+        <label>Por página
+          <select id="selectSize">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+        </label>
+        <button type="submit">Buscar</button>
+      </form>
+
+      <p id="mensajeError" class="error-msg" role="alert" aria-live="polite"></p>
+
+      <div class="tabla-wrapper">
+        <table class="tabla-envios">
+          <caption class="solo-lectores">Listado de guías de envío</caption>
+          <thead>
+            <tr>
+              <th scope="col">Rastreo</th>
+              <th scope="col">Destinatario</th>
+              <th scope="col">Dirección</th>
+              <th scope="col">Flete</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTabla"></tbody>
+        </table>
+      </div>
+
+      <nav class="paginador" aria-label="Paginación de envíos">
+        <button type="button" id="btnPrimera">&laquo; Primera</button>
+        <button type="button" id="btnAnterior">&lsaquo; Anterior</button>
+        <span id="infoPagina" aria-live="polite">Cargando…</span>
+        <button type="button" id="btnSiguiente">Siguiente &rsaquo;</button>
+        <button type="button" id="btnUltima">Última &raquo;</button>
+      </nav>
+    </section>
+  </main>
+
+  <script src="paginado.js"></script>
+</body>
+</html>
