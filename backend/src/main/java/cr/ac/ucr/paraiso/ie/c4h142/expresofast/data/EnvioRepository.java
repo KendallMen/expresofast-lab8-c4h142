@@ -3,9 +3,12 @@ package cr.ac.ucr.paraiso.ie.c4h142.expresofast.data;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
 import cr.ac.ucr.paraiso.ie.c4h142.expresofast.domain.Envio;
@@ -47,4 +50,26 @@ public interface EnvioRepository extends JpaRepository<Envio, Integer> {
     @Query("UPDATE Envio e SET e.estadoEnvio = :estado WHERE e.vehiculo.id = :vehiculoId")
     int actualizarEstadoPorVehiculo(@Param("vehiculoId") Integer vehiculoId,
                                      @Param("estado") String estado);
+
+    @Query("""
+        SELECT e FROM Envio e
+        WHERE (:estado = '' OR e.estadoEnvio = :estado)
+          AND (:busqueda = ''
+               OR LOWER(e.codigoRastreo)    LIKE LOWER(CONCAT('%', :busqueda, '%'))
+               OR LOWER(e.destinatario)     LIKE LOWER(CONCAT('%', :busqueda, '%'))
+               OR LOWER(e.direccionDestino) LIKE LOWER(CONCAT('%', :busqueda, '%')))
+        """)
+    Page<Envio> buscarPaginado(@Param("estado") String estado,
+                               @Param("busqueda") String busqueda,
+                               Pageable pageable);
+
+    Page<Envio> findByEstadoEnvio(String estado, Pageable pageable);
+
+    @Procedure(name = "Envio.obtenerPorEstado")
+    List<Envio> obtenerPorEstadoSP(@Param("pEstado") String estado);
+
+    @Query(value = "EXEC dbo.SP_RESUMEN_METRICAS_ENVIOS", nativeQuery = true)
+    List<Object[]> resumenMetricas();
+
+
 }
