@@ -2,7 +2,12 @@ package cr.ac.ucr.paraiso.ie.c4h142.expresofast.business;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,6 +25,7 @@ import cr.ac.ucr.paraiso.ie.c4h142.expresofast.domain.Usuario;
 import cr.ac.ucr.paraiso.ie.c4h142.expresofast.domain.Vehiculo;
 import cr.ac.ucr.paraiso.ie.c4h142.expresofast.dto.BitacoraResponseDTO;
 import cr.ac.ucr.paraiso.ie.c4h142.expresofast.dto.CambioEstadoDTO;
+import cr.ac.ucr.paraiso.ie.c4h142.expresofast.dto.EnvioDTO;
 import cr.ac.ucr.paraiso.ie.c4h142.expresofast.dto.EnvioRequestDTO;
 import cr.ac.ucr.paraiso.ie.c4h142.expresofast.dto.EnvioResponseDTO;
 import cr.ac.ucr.paraiso.ie.c4h142.expresofast.exception.CapacidadExcedidaException;
@@ -154,5 +160,40 @@ public class EnvioService {
 
     public double calcularTarifa(double pesoKg, double distanciaKm) {
         return TARIFA_BASE + (pesoKg * COSTO_POR_KG) + (distanciaKm * COSTO_POR_KM);
+    }
+
+    private static final Map<String, String> CAMPOS_ORDEN = Map.of(
+            "id", "id",
+            "codigoRastreo", "codigoRastreo",
+            "destinatario", "destinatario",
+            "direccionDestino", "direccionDestino",
+            "montoFlete", "costo",
+            "estado", "estadoEnvio",
+            "fechaCreacion", "fechaCreacion");
+
+    @Transactional(readOnly = true)
+    public Page<EnvioDTO> listarPaginado(int page, int size, String sortBy, String dir,
+                                         String busqueda, String estado) {
+        String campo = CAMPOS_ORDEN.getOrDefault(sortBy, "fechaCreacion");
+        Sort sort = "asc".equalsIgnoreCase(dir) ? Sort.by(campo).ascending() : Sort.by(campo).descending();
+        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100), sort);
+
+        String est = estado == null ? "" : estado.trim().toUpperCase();
+        String bus = busqueda == null ? "" : busqueda.trim();
+
+        return envioRepository.buscarPaginado(est, bus, pageable).map(EnvioDTO::desde);
+    }
+
+    @Transactional
+    public List<EnvioDTO> listarViaStoredProcedure(String estado) {
+        return envioRepository.obtenerPorEstadoSP(estado.trim().toUpperCase())
+                .stream().map(EnvioDTO::desde).toList();
+    }
+
+    @Transactional
+    public List<Map<String, Object>> resumenMetricas() {
+        return envioRepository.resumenMetricas().stream()
+                .map(f -> Map.<String, Object>of("estado", f[0], "totalEnvios", f[1], "montoTotalFlete", f[2]))
+                .toList();
     }
 }
